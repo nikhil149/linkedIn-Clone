@@ -1,6 +1,15 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import {signOutApi} from "../actions"
+
 const Header = (props) => {
+    const user = useSelector((state) => state.userState.user);
+    const dispatch = useDispatch();
+
+    const signOut =()=>{
+        dispatch(signOutApi())
+    }
     return (
         <Container>
             <Content>
@@ -60,12 +69,22 @@ const Header = (props) => {
 
                         <User>
                             <a>
-                                <img src="/images/user.svg" alt="" />
-                                <span>Me</span>
-                                <img src="/images/down-icon.svg" alt="" />
+                                {user && user.photoURL ? (
+                                    <img
+                                        src={user.photoURL}
+                                        alt="userPhoto"
+                                    ></img>
+                                ) : (
+                                    <img src="/images/user.svg" alt="" />
+                                )}
+
+                                <span>
+                                    Me
+                                    <img src="/images/down-icon.svg" alt="" />
+                                </span>
                             </a>
 
-                            <SignOut>
+                            <SignOut onClick={signOut}>
                                 <a>Sign Out</a>
                             </SignOut>
                         </User>
@@ -215,47 +234,46 @@ const NavList = styled.li`
     }
 `;
 
-
 const SignOut = styled.div`
-  position: absolute;
-  top: 45px;
-  background: white;
-  border-radius: 0 0 5px 5px;
-  width: 100px;
-  height: 40px;
-  font-size: 16px;
-  transition-duration: 167ms;
-  text-align: center;
-  display: none;
+    position: absolute;
+    top: 45px;
+    background: white;
+    border-radius: 0 0 5px 5px;
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+    transition-duration: 167ms;
+    text-align: center;
+    display: none;
+    cursor: pointer;
 `;
 
 const User = styled(NavList)`
-  a > svg {
-    width: 24px;
-    border-radius: 50%;
-  }
-  a > img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
-  span {
-    display: flex;
-    align-items: center;
-  }
-  
-  &:hover {
-    ${SignOut} {
-      align-items: center;
-      display: flex;
-      justify-content: center;
+    a > svg {
+        width: 24px;
+        border-radius: 50%;
     }
-  }
+    a > img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+    }
+    span {
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover {
+        ${SignOut} {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+    }
 `;
 
 const Work = styled(User)`
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
 `;
-
 
 export default Header;

@@ -1,12 +1,16 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 import styled from 'styled-components';
 import Leftside from './Leftside';
 import Rightside from './Rightside';
 import Main from './Main';
+import { Redirect } from 'react-router-dom';
 const Home = () => {
+    const user = useSelector(state=> state.userState.user)
     return (
         <Container>
-            <Section>
+            {!user && <Redirect to="/"/>}
+            {user && (<><Section>
                 <h5><a>Hiring in a hurry? -</a></h5>
                 <p>Find talented pros in record time with Upwork and keep business moving.</p>
             </Section>
@@ -14,7 +18,7 @@ const Home = () => {
                 <Leftside />
                 <Main />
                 <Rightside />
-            </Layout>
+            </Layout></>)}
         </Container>
     )
 }

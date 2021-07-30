@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import {useSelector } from 'react-redux';
 const Leftside = () => {
+    const user = useSelector(state=>state.userState.user)
     return (
         <Container>
             <ArtCard>
@@ -8,7 +10,7 @@ const Leftside = () => {
                     <CardBackground />
                     <a>
                         <Photo />
-                        <Link>Welcome, there!</Link>
+                        <Link>Welcome, {user.displayName}!</Link>
                     </a>
                     <a>
                         <AddPhotoText>Add a photo</AddPhotoText>
